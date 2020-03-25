@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var a=0
+    Function.prototype.before = function (beforeF,hahahah) {
+      console.log('------------------开始-------------------')  
+      var me = this    
+     function getPrototypeName(res){
+       a++;
+       if(a<100){
+         console.log(a+'---',res.prototype.constructor.name)
+        if(res.prototype.constructor){
+          getPrototypeName(res.prototype.constructor)
+        }else{
+          console.log('没有了')
+        }
+       }
+      
+     }
+     console.log(this.prototype.constructor.name)
+     getPrototypeName(this.prototype.constructor)
+      
+    }
+    window.funcA=function(res){
+      console.log('funA')
+    }
+    function funB(){
+      console.log('funB')
+    }
+    var funC =function (){
+      console.log('funC')
+    }
+    // funcA.before()
+    // funB.before()
+    funC.before()
+    </script>
+</body>
+</html>

@@ -1,6 +1,9 @@
 .DS_Store
+.history
 node_modules
-/dist
+/dist-prod
+/dist-uat
+/dist-deve
 
 # local env files
 .env.local

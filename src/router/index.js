@@ -1,30 +1,56 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import infoRelease from '@/router/modules/info-release'
+import systemSetting from '@/router/modules/system-setting'
+import Login from '../views/login'
+import Icons from '../views/icons'
+const originalPush = VueRouter.prototype.push
+// 解决this.$router.push()跳转当前页面
 
-Vue.use(VueRouter);
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+Vue.use(VueRouter)
 
-const routes = [
+export const routes = [
+  ...infoRelease,
+  ...systemSetting
+]
+//最终路由asdfasdfadf
+let fullRoutes = [
+  ...routes,
   {
-    path: "/",
-    name: "Home",
-    component: Home
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    'path': '/login',
+    'name': 'login',
+    'component': Login
+  },{
+    'path': '/icons',
+    'name': 'icons',
+    'component': Icons
+  },{
+    //跳转路由失败 信息发布-文章管理 
+    'path': '*',
+    'redirect': '/login'
   }
-];
-
+]
 const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes
-});
+  'mode': 'hash',
+  'base': process.env.BASE_URL,
+  routes: fullRoutes
+})
+// 不拦截登录白名单
+const whileList = ['/login']
 
-export default router;
+router.beforeEach((to, from, next) => {
+  next()
+  // next({
+  //   'path': `/login?redirect=${to.path}`
+  // })
+ 
+})
+
+router.afterEach(() => {
+  window.scrollTo(0, 0)
+  // finish progress bar
+})
+export default router
