@@ -17,9 +17,8 @@ Vue.use(ElementUI, {
 import Icon from 'vue2-svg-icon/Icon'
 Vue.component('icon',Icon)
 
-// myAxios引入
-import myAxios from '@/apis/httpBase.js'
-Vue.prototype.$axios = myAxios
+import componentUploadFiles from './components/index'
+Vue.use(componentUploadFiles)
 new Vue({
   router,
   store,
