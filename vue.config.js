@@ -1,4 +1,6 @@
 const path = require('path')
+const webpack = require('webpack')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 
 module.exports = {
   'publicPath': '/', // 公共路径
@@ -40,14 +42,39 @@ module.exports = {
   },
   
 
-  'configureWebpack': {
+  'configureWebpack': config=> {
+    //生产环境去除console
+    if (process.env.NODE_ENV === 'production') {
+      config.optimization.minimizer[0].options.terserOptions.compress['drop_console'] = true
+    }
+    return {
     // 覆盖webpack默认配置的都在这里
-    'resolve': {
+      'resolve': {
       // 配置解析别名
-      'alias': {
-        '@': path.resolve(__dirname, './src'),
-        '@views': path.resolve(__dirname, './src/views')
-      }
-    }      
+        'alias': {
+          '@': path.resolve(__dirname, './src'),
+          '@views': path.resolve(__dirname, './src/views')
+        }
+      },
+      externals: {//import AMap from 'AMap'==> vue:vue 告诉项目如果用到了 AMap就 是window.AMap 就不会报找不到了
+        AMap: 'AMap'
+      },
+      plugins: [
+        new webpack.DllReferencePlugin({
+          context: process.cwd(),
+          manifest: require('./public/vendor/vendor-manifest.json')
+        }),
+    
+        new AddAssetHtmlPlugin({
+          // dll文件位置
+          filepath: path.resolve(__dirname, './public/vendor/*.js'),
+          // dll 引用路径
+          publicPath: './vendor',
+          // dll最终输出的目录
+          outputPath: './vendor'
+        })
+      ]
+      
+    }
   }
 }
