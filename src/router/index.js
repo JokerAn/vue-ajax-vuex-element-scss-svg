@@ -4,6 +4,7 @@ import infoRelease from '@/router/modules/info-release'
 import systemSetting from '@/router/modules/system-setting'
 import Login from '../views/login'
 import Icons from '../views/icons'
+import aMap from '../views/aMap'
 const originalPush = VueRouter.prototype.push
 // 解决this.$router.push()跳转当前页面
 
@@ -23,6 +24,10 @@ let fullRoutes = [
     'path': '/login',
     'name': 'login',
     'component': Login
+  },{
+    'path': '/aMap',
+    'name': 'aMap',
+    'component': aMap
   },{
     'path': '/icons',
     'name': 'icons',
