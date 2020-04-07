@@ -40,14 +40,57 @@ module.exports = {
   },
   
 
-  'configureWebpack': {
-    // 覆盖webpack默认配置的都在这里
-    'resolve': {
+  'configureWebpack': config=> {
+    //生产环境去除console
+    let myConfigs = {}
+
+    myConfigs.resolve = {
       // 配置解析别名
       'alias': {
         '@': path.resolve(__dirname, './src'),
         '@views': path.resolve(__dirname, './src/views')
       }
-    }      
+    }
+
+    if (process.env.NODE_ENV === 'production') {
+      config.optimization.minimizer[0].options.terserOptions.compress['drop_console'] = true
+      myConfigs.externals = {
+        // 告诉项目如果用到了 VueRouter 是 import VueRouter from 'vue-router' 就不会报找不到了
+        //'包名': '自己定义的名称',
+        'vue-router': 'VueRouter',
+        axios: 'axios',
+        vue: 'Vue'
+      }
+    }
+    return myConfigs
+  },
+  chainWebpack(config){
+    config.when(process.env.NODE_ENV === 'development', config =>{
+      config
+        .entry('app')
+        .clear()
+        .add('./src/main-dev.js')
+
+      config.plugin('html').tap(args => {
+        args[0].isProd = false
+        return args
+      })
+    })
+    config.when(process.env.NODE_ENV === 'production', config =>{
+      config
+        .entry('app')
+        .clear()
+        .add('./src/main-prod.js')
+      config.plugin('html').tap(args => {
+        args[0].isProd = true
+        return args
+      })
+      // 跟configureWebpack中的externals配置一个道理
+      // config.set('externals',{
+      //   'vue-router': 'VueRouter',
+      //   axios: 'axios',
+      //   vue: 'Vue'
+      // })
+    })
   }
 }
