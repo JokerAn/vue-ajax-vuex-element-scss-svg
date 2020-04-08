@@ -29,6 +29,9 @@ export default {
     }
   },
   created(){
+    console.log([...[1,2,3]])
+    console.log([1,2,3].includes(1))
+    console.log('123'.startsWith(1))
     if(sessionStorage.getItem('token')){
       this.$router.push({ path: '/system-setting/person-center' })
 

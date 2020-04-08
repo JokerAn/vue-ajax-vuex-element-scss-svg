@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flex布局</title>
+</head>
+<body>
+  <style>
+    body{margin:0;padding:0;}
+    body *{box-sizing: border-box;}
+    .content{border:4px solid;width:100%;height:150px;margin:20px 0;}
+    ul{padding:0;list-style-type:none;}
+    li{padding:0;margin:0;border:1px solid blue;width:70px;height:70px;list-style-type:none;}
+  </style>
+  <h2>水平垂直居中content1多复制几个li试试</h2>
+  <ul class='content content1'>
+    <style>
+      .content1{display:flex;justify-content: center;align-items:center;/*flex-wrap:wrap*/}
+    </style>
+    <li>content1</li>
+    <li>content1</li>
+    <li>content1</li>
+    <li>content1</li>
+  </ul>
+  <h2>间隔左右宽度一致包括跟边框的宽度content2</h2>
+  <ul class='content content2'>
+    <style>
+      .content2{display:flex;justify-content:space-evenly;/*flex-wrap:wrap*/}
+    </style>
+    <li>content2</li>
+    <li>content2</li>
+    <li>content2</li>
+    <li>content2</li>
+  </ul>
+  <h2>左边固定100px右边自适应content3</h2>
+  <h5>
+    flex:auto;<br>
+    flex-grow, flex-shrink 和 flex-basis的简写<br>
+    flex-grow:定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大,<br>
+    flex-shrink:定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小<br>
+    flex-basis:定义了在分配多余空间之前，项目占据的主轴空间（main size<br>
+    默认值为0 1 auto。后两个属性可选。<br>
+    该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。建议优先使用这个（因为浏览器会推算相关值）<br>
+  </h5>
+  <div class='content content3'>
+    <style>
+      .content3{display:flex;}
+      .content3 .left{width:100px;background:red;flex:none;}
+      .content3 .right{background:#ddd}
+    </style>
+    <div class='left'></div>
+    <div class='right'>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim libero rem delectus
+         dolorum architecto, numquam facere inventore 
+        voluptatem tenetur pariatur consequatur nobis repellendus odio 
+        atque dolor ab sint necessitatibus nesciunt.
+      </p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dicta saepe 
+        impedit optio placeat nobis repellendus sunt tempore, mollitia sed commodi possimus
+        doloremque obcaecati ullam labore modi facere, ipsum at.
+      </p>
+    </div>
+    <p>
+      visibility: hidden和display: none的区别
+      普通回答，一个隐藏，但占据位置，一个隐藏，不占据位置
+      进一步，display由于隐藏后不占据位置，所以造成了dom树的改变，会引发回流，代价较大
+      再进一步，当一个页面某个元素经常需要切换display时如何优化，一般会用复合层优化，
+      或者要求低一点用absolute让其脱离普通文档流也行。然后可以将话题引到普通文档流，absolute文档流，复合图层的区别，
+    </p>
+    <p>
+      如何触发BFC？
+      根元素
+      float属性不为none
+      position为absolute或fixed
+      display为inline-block, flex, inline-flex，table，table-cell，table-caption
+      overflow不为visible
+      这里提下，display: table，它本身不产生BFC，但是它会产生匿名框（包含display: table-cell的框），而这个匿名框产生BFC
+    </p>
+    
+  </ul>
+</body>
+</html>
