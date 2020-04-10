@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
+import './components'
 //引入高德地图
 import VueAMap from 'vue-amap'
 Vue.use(VueAMap)
@@ -28,8 +28,6 @@ Vue.use(ElementUI, {
 import Icon from 'vue2-svg-icon/Icon'
 Vue.component('icon',Icon)
 
-import componentUploadFiles from './components/index'
-Vue.use(componentUploadFiles)
 new Vue({
   router,
   store,

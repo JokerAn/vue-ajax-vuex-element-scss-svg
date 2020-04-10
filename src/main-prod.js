@@ -17,8 +17,6 @@ Vue.use(ElementUI, {
 import Icon from 'vue2-svg-icon/Icon'
 Vue.component('icon',Icon)
 
-import componentUploadFiles from './components/index'
-Vue.use(componentUploadFiles)
 new Vue({
   router,
   store,
