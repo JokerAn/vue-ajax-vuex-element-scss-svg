@@ -85,6 +85,13 @@ module.exports = {
         args[0].isProd = true
         return args
       })
+      if (process.env.NODE_ENV === 'production') {
+        if (process.env.npm_config_report) {
+          config
+            .plugin('webpack-bundle-analyzer')
+            .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+        }
+      }
       // 跟configureWebpack中的externals配置一个道理
       // config.set('externals',{
       //   'vue-router': 'VueRouter',
