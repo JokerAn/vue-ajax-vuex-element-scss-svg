@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
 
 module.exports = {
   'publicPath': '/', // 公共路径
@@ -43,14 +44,10 @@ module.exports = {
   
 
   'configureWebpack': config=> {
-    //生产环境去除console
-    if (process.env.NODE_ENV === 'production') {
-      config.optimization.minimizer[0].options.terserOptions.compress['drop_console'] = true
-    }
-    return {
-    // 覆盖webpack默认配置的都在这里
+    let Obj = {
+      // 覆盖webpack默认配置的都在这里
       'resolve': {
-      // 配置解析别名
+        // 配置解析别名
         'alias': {
           '@': path.resolve(__dirname, './src'),
           '@views': path.resolve(__dirname, './src/views')
@@ -64,7 +61,7 @@ module.exports = {
           context: process.cwd(),
           manifest: require('./public/vendor/vendor-manifest.json')
         }),
-    
+      
         new AddAssetHtmlPlugin({
           // dll文件位置
           filepath: path.resolve(__dirname, './public/vendor/*.js'),
@@ -72,9 +69,20 @@ module.exports = {
           publicPath: './vendor',
           // dll最终输出的目录
           outputPath: './vendor'
+        }),
+        new CompressionPlugin({
+          test: /\.js$|\.html$|\.css/,// 匹配文件名
+          threshold: 10240,// 对超过10k的数据压缩
+          deleteOriginalAssets: false// 不删除源文件
         })
       ]
-      
+        
     }
+    //生产环境去除console
+
+    if (process.env.NODE_ENV === 'production') {
+      config.optimization.minimizer[0].options.terserOptions.compress['drop_console'] = true
+    }
+    return Obj 
   }
 }
