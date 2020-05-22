@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flex圣杯布局</title>
+</head>
+<body>
+  <style>
+    *{margin:0;padding:0;list-style: none;}
+    body{
+      display: flex;
+      flex-direction:column;/*主轴方向为从上到下*/
+      min-height: 100vh;
+    }
+    .middle-box{
+      box-sizing:border-box;
+      width:500px;/*不是主轴方向 所以生效*/
+      height:100px;/*是主轴方向 被flex：1覆盖 */
+      border:1px solid;
+      display: flex;
+      flex:1;/* 将剩余的空间(主轴方向)占完 */
+    }
+    .left,.right{
+      flex:0 0 100px;
+    }
+    .middle{
+      flex:1;
+      background:blue;
+    }
+    header,footer{
+      flex:0 0 50px;/*设置主轴方向（高度/宽度）为50px 本身的高度或者宽度将不起作用*/
+      height:200px;
+      background: red;
+    }
+
+  </style>
+  <style>
+  </style>
+  <header>我的头部</header>
+  <div class="middle-box">
+    <div class="left">我是左侧</div>
+    <div class="middle">
+      <ul>
+        <li style="line-height: 150px;">哇哈哈哈</li>
+      </ul>
+    </div>
+    <div class="right">我是右侧</div>
+  </div>
+  <footer>我的底部</footer>
+</body>
+</html>
