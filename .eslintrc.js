@@ -98,7 +98,7 @@ module.exports = {
     "no-undefined": 0,//2不能使用undefined
     "no-useless-escape": 0, //2正则会有问题
     "no-unexpected-multiline": 0,//避免多行表达式
-    "no-underscore-dangle": 1,//标识符不能以_开头或结尾
+    "no-underscore-dangle": 0,//标识符不能以_开头或结尾
     "no-unneeded-ternary": 2,//禁止不必要的嵌套 var isYes = answer === 1 ? true : false;
     "no-unreachable": 0,//不能有无法执行的代码 0允许return、throw、continue 和 break语句之后出现不可达代码
     "no-unused-expressions": 0,//禁止无用的表达式
@@ -110,7 +110,7 @@ module.exports = {
     "no-warning-comments": [1, { "terms": ["todo", "fixme", "xxx"], "location": "start" }],//不能有警告备注
     "no-with": 2,//禁用with
     
-      "vue/html-self-closing": ["error", {
+      "vue/html-self-closing": ["error", {// 禁止使用<div/> 必须使用 <div></div> 去掉这个配置就可以使用<div/>
         "html": {
           "void": "never",
           "normal": "never",
@@ -151,7 +151,7 @@ module.exports = {
     "consistent-this": [2, "that"],//this别名
     "constructor-super": 0,//非派生类不能调用super，派生类必须调用super
     "curly": [2, "all"],//必须使用 if(){} 中的{}
-    "default-case": 2,//switch语句最后必须有default
+    "default-case": 0,//switch语句最后必须有default
     "dot-location": 0,//对象访问符的位置，换行的时候在行首还是行尾
     "dot-notation": [0, { "allowKeywords": true }],//避免不必要的方括号
     "eol-last": 0,//文件以单一的换行符结束
