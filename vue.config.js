@@ -3,6 +3,9 @@ const webpack = require('webpack')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
 module.exports = {
   'publicPath': '/', // 公共路径
   'outputDir': process.env.VUE_APP_OUTPUTDIR, // 不同的环境打不同包名
@@ -84,5 +87,24 @@ module.exports = {
       config.optimization.minimizer[0].options.terserOptions.compress['drop_console'] = true
     }
     return Obj 
+  },
+  chainWebpack(config) {
+
+    // set svg-sprite-loader
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/icons'))
+      .end()
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end()
   }
 }
